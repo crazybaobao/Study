@@ -14,7 +14,6 @@ import java.util.List;
  * Created by wangyun on 15/10/23.
  * 该类封装了常用数据库的一些操作
  */
-
 public class CoolWeatherDB {
     /**
      * 数据库名

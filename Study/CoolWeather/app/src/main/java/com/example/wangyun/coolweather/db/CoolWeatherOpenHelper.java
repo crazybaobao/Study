@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by wangyun on 15/10/23.
  * 该类负责数据库建表
  */
-
 public class CoolWeatherOpenHelper extends SQLiteOpenHelper {
     /**
      * Province表建表语句
