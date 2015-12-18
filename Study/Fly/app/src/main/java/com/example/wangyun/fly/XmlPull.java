@@ -12,9 +12,10 @@ import java.io.StringReader;
  * 从response中解析出woeid
  */
 public class XmlPull {
-    public static String woeid = "";
 
+    //String woeid = ""; 不该写在这里，写在这里就是全局变量了，会导致某些逻辑只能运行一次
     public static String xp(String response) {
+        String woeid = "";
         try {
             //获取XmlPullParserFactory的实例
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
