@@ -14,7 +14,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
 /**
  * Created by wangyun on 15/12/17.
@@ -33,8 +32,9 @@ public class MainActivity extends Activity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SHOW_RESPONSE:
-                    String rp = (String) msg.obj;
-                    textView.setText(rp);
+                  //  String rp = (String) msg.obj;
+                    ParseJson wt=(ParseJson)msg.obj;
+                    textView.setText(wt.time+"\n"+wt.date+"\n"+wt.temp+"\n"+wt.text);
             }
         }
     };
@@ -62,10 +62,11 @@ public class MainActivity extends Activity {
             public void run() {
                 HttpURLConnection connection = null;
                 try {
-                    URL url = new URL("http://query.yahooapis" +
-                            ".com/v1/public/yql?q=select%20*%20from%20geo" +
-                            ".places%20where%20text%3D%22" + URLEncoder.encode(st) +
-                            "%22&diagnostics=true");
+                 //   URL url = new URL("http://query.yahooapis" +
+                  //          ".com/v1/public/yql?q=select%20*%20from%20geo" +
+                    //        ".places%20where%20text%3D%22" + URLEncoder.encode(st) +
+                      //      "%22&diagnostics=true");
+                    URL url =new URL("https://query.yahooapis.com/v1/public/yql?q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20%3D%202487889&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
                     connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     connection.setConnectTimeout(8000);
@@ -78,10 +79,14 @@ public class MainActivity extends Activity {
                     while ((line = reader.readLine()) != null) {
                         response.append(line);
                     }
-                    wwwid = XmlPull.xp(response.toString());
+                    //wwwid = XmlPull.xp(response.toString());
+                    ParseJson weather = new ParseJson();
+                            weather.pj(response.toString());
+
                     Message message = new Message();
                     message.what = SHOW_RESPONSE;
-                    message.obj = wwwid;
+                    message.obj = weather;
+
                     handler.sendMessage(message);
 
                 } catch (Exception e) {
